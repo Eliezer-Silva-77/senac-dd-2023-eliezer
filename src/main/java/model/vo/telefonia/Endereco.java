@@ -4,19 +4,19 @@ public class Endereco {
 	
 	//Atributos
 	private Integer id;
-	private String rua;
 	private String cep;
-	private String bairro ;
+	private String rua;
+	private String numero;
+	private String bairro;
 	private String cidade;
 	private String estado;
-	private String numero;
 	
 	//Construtores
 	public Endereco() {
 		
 	}
 	
-	public Endereco(Integer id, String rua, String cep, String numero, String bairro, String cidade, String estado) {
+	public Endereco(Integer id, String cep, String rua, String numero, String bairro, String cidade, String estado) {
 		super();
 		this.id = id;
 		this.cep = cep;
@@ -37,9 +37,9 @@ public class Endereco {
 		this.estado = estado;
 	}
 
-	//Métodos
+	//MÃ©todos
 	
-	//Métodos getter e setters
+	//MÃ©todos getter e setters
 	public Integer getId() {
 		return id;
 	}
@@ -98,7 +98,12 @@ public class Endereco {
 
 	@Override
 	public String toString() {
-		return "Endereco [cep=" + cep + ", rua=" + rua + ", numero=" + numero + ", bairro=" + bairro + ", cidade="
-				+ cidade + ", estado=" + estado + "]";
+		return getEnderecoResumido();
+//		return "Endereco [cep=" + cep + ", rua=" + rua + ", numero=" + numero + ", bairro=" + bairro + ", cidade="
+//				+ cidade + ", estado=" + estado + "]";
+	}
+
+	public String getEnderecoResumido() {
+		return rua + " nÂº" + numero + ", " + bairro + ", " + cidade + "/" + estado;
 	}
 }

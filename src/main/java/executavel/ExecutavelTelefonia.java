@@ -1,42 +1,46 @@
 package executavel;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import model.dao.telefonia.EnderecoDAO;
+import javax.swing.JOptionPane;
+
+import controller.ClienteController;
+import controller.EnderecoController;
+import model.bo.ClienteBO;
+import model.exception.CampoInvalidoException;
+import model.exception.CpfJaUtilizadoException;
+import model.exception.EnderecoInvalidoException;
 import model.vo.telefonia.Cliente;
 import model.vo.telefonia.Endereco;
-import model.vo.telefonia.Telefone;
 
 public class ExecutavelTelefonia {
 
 	public static void main(String[] args) {
 		
-		List<Telefone> telefonesDoPele = null;
-		Endereco endereco1 = new Endereco("0001123123", "Mauro Ramos", "10", "SC", "Florianopolis", "Centro");
-		EnderecoDAO salvarEnderecos = new EnderecoDAO();
-		salvarEnderecos.inserir(endereco1);
+		Endereco endereco1 = new EnderecoController().consultarPorId(1);
 		
-		if(endereco1.getId() != null) {
-			System.out.println("Novo endere�o cadastrado");
-		} else {
-			System.out.println("erro");
-		}
-		Cliente pele = new Cliente("Edson Aranes","111222333444", telefonesDoPele, true, endereco1 );
 		
-		List<Telefone> telefonesDoSocrates = new ArrayList<Telefone>();
-		Cliente socrates = new Cliente("S�crates Brasileiro","33323334443", telefonesDoSocrates, true, endereco1 );
-		telefonesDoSocrates.add(new Telefone("48", "8451-2364", true, true));
+		ClienteController controladorDeClientes = new ClienteController();
 		
-		List<Cliente> clientes = new ArrayList<Cliente>();
-		clientes.add(socrates);
-		clientes.add(pele);
-		
-		System.out.println("--------------Clientes da Firma--------------");
-		
-		for(Cliente c: clientes) {
-			System.out.println(c.toString());
-		}
-	}
+		Cliente novoCliente = new Cliente();
+		novoCliente.setNome("Mário");
+		novoCliente.setCpf("19122233312");
+		novoCliente.setEndereco(endereco1);
+		novoCliente.setAtivo(true);
+		novoCliente.setTelefones(new ArrayList());
 
+		try {
+			novoCliente = controladorDeClientes.inserir(novoCliente);
+			
+			JOptionPane.showMessageDialog(null, "Cliente salvo com sucesso! Id gerado: " + novoCliente.getId(), 
+					"Sucesso", JOptionPane.INFORMATION_MESSAGE);
+			
+			//Exemplo de captura de múltiplas exceções, válido apenas a partir do Java versão 7
+		} catch (CpfJaUtilizadoException 
+					| EnderecoInvalidoException 
+					| CampoInvalidoException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), 
+					"Erro", JOptionPane.ERROR_MESSAGE);
+		} 
+	}
 }
