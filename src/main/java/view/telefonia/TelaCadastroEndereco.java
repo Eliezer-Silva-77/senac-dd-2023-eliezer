@@ -90,7 +90,7 @@ public class TelaCadastroEndereco {
 		lblCidade.setBounds(15, 90, 45, 14);
 		frmCadastroDeEndereco.getContentPane().add(lblCidade);
 		
-		lblNumero = new JLabel("Número:");
+		lblNumero = new JLabel("Numero:");
 		lblNumero.setBounds(15, 115, 45, 14);
 		frmCadastroDeEndereco.getContentPane().add(lblNumero);
 		
